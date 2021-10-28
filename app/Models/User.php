@@ -23,6 +23,11 @@ class User extends Authenticatable
         'password',
     ];
 
+    //Relación uno a muchos
+    public function sales(){
+        return $this->hasMany('App\Models\Sale');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
