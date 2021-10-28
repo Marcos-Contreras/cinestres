@@ -16,8 +16,8 @@ class CreateShowsTable extends Migration
         Schema::create('shows', function (Blueprint $table) {
             $table->id();
 
-            $table->foreign('movie_id')->references('id')->on('movies')->onDelete('cascade');
-            $table->foreign('theater_id')->references('id')->on('theaters')->onDelete('cascade');
+            $table->foreignId('movie_id')->references('id')->on('movies')->onDelete('cascade');
+            $table->foreignId('theater_id')->references('id')->on('theaters')->onDelete('cascade');
             // $table->string('movie_id');
             // $table->string('theater_id');
             $table->string('schedule');

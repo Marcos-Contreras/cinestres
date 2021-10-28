@@ -17,8 +17,8 @@ class CreateSalesTable extends Migration
             $table->id();
 
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('show_id')->references('id')->on('shows')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('show_id')->references('id')->on('shows')->onDelete('cascade');
             // $table->string('user_id');
             // $table->string('show_id');
             $table->float('quantity');
