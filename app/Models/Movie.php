@@ -16,6 +16,7 @@ class Movie extends Model
         'director',
         'actors',
         'sinopsis',
+        //'image',
     ];
 
     //Relación uno a muchos

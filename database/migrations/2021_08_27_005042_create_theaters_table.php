@@ -16,6 +16,7 @@ class CreateTheatersTable extends Migration
         Schema::create('theaters', function (Blueprint $table) {
             $table->id();
 
+            $table->string('name');
             $table->integer('no_seats');
             $table->foreignId('cinema_id')->references('id')->on('cinemas')->onDelete('cascade');
             // $table->string('cinema_id');

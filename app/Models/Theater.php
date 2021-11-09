@@ -10,6 +10,7 @@ class Theater extends Model
     use HasFactory;
 
     protected $fillable = [
+        'name',
         'no_seats',
         'cinema_id',
     ];

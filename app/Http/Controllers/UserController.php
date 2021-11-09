@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
+
 
 class UserController extends Controller
 {
@@ -13,7 +17,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return 'HOLA';
+        $users = User::all();
+        return $users;
     }
 
     /**
@@ -34,7 +39,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $user = new User;
+        // $user->name = $request->name;
+        // $user->email = $request->email;
+        // $user->password = $request->password;
+
+        // $user->save();
+
+        $user = User::create(['name' => $request->name,
+        'email' => $request->email,
+        'password' => $request->password]);
     }
 
     /**
@@ -43,9 +57,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $users = User::where('name',$request->name)->first();
+        return $users;
     }
 
     /**
@@ -66,9 +81,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    // public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        User::where('name',$request->name)
+        ->update(['email' => $request->email]);
     }
 
     /**
@@ -77,8 +94,22 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    // public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $user = User::where('name',$request->name)->first();
+        $user->delete();
+    }
+
+    public function userSales(Request $request)
+    {
+        Show::find(1)->user;
+        $user = User::find(1);
+        return $user->sale;
+    }
+
+
+    public function showToken(){
+        echo csrf_token();
     }
 }

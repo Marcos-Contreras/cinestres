@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Cinema;
+use Illuminate\Support\Facades\Validator;
 
 class CinemaController extends Controller
 {
@@ -13,7 +15,8 @@ class CinemaController extends Controller
      */
     public function index()
     {
-        //
+        $cinemas = Cinema::all();
+        return $cinemas;
     }
 
     /**
@@ -34,7 +37,8 @@ class CinemaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cinema = Cinema::create(['name' => $request->name,
+        'direction' => $request->direction]);
     }
 
     /**
@@ -43,7 +47,7 @@ class CinemaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
         //
     }

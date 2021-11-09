@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Show;
+use Illuminate\Support\Facades\Validator;
 
 class ShowController extends Controller
 {
@@ -13,7 +15,15 @@ class ShowController extends Controller
      */
     public function index()
     {
-        //
+        $sale = Show::join('movies','movies.id', '=', 'shows.movie_id')
+        ->join('theaters','theaters.id', '=', 'shows.theater_id')
+        ->join('cinemas','cinemas.id', '=', 'theaters.cinema_id')
+        ->select('movies.name as Pelicula','shows.schedule as Horario','theaters.id as Sala', 'cinemas.name as Cine', 'shows.day as Fecha')
+        ->latest('shows.day')
+        ->orderByDesc('shows.schedule')
+        ->get();
+        return $sale->toJson();
+        // return $sale;
     }
 
     /**
@@ -34,7 +44,9 @@ class ShowController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $show = Show::create(['movie_id' => $request->movie_id,
+        'theater_id' => $request->theater_id,
+        'schedule' => $request->schedule]);
     }
 
     /**
@@ -43,9 +55,19 @@ class ShowController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $busqueda = $request->get("moviename");
+        $sale = Show::join('movies','movies.id', '=', 'shows.movie_id')
+        ->join('theaters','theaters.id', '=', 'shows.theater_id')
+        ->join('cinemas','cinemas.id', '=', 'theaters.cinema_id')
+        ->where("movies.name", "=", $busqueda)
+        ->select('movies.name as Pelicula','shows.schedule as Horario','theaters.name as Sala', 'cinemas.name as Cine', 'shows.day as Fecha')
+        ->latest('shows.day')
+        ->orderByDesc('shows.schedule')
+        ->get();
+        return $sale->toJson();
+        // return $sale;
     }
 
     /**
@@ -68,7 +90,11 @@ class ShowController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Show::where('id',$request->id)
+        ->update(['movie_id'=> $request->movie_id,
+                          'theater_id'=> $request->theater_id,
+                          'schedule'=> $request->schedule,
+                          'day'=> $request->day]);
     }
 
     /**
@@ -79,6 +105,11 @@ class ShowController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $show = Show::where('id',$request->id)->first();
+        $show->delete();
+    }
+
+    public function showToken(){
+        echo csrf_token();
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Theater;
+use Illuminate\Support\Facades\Validator;
 
 class TheaterController extends Controller
 {
@@ -13,7 +15,8 @@ class TheaterController extends Controller
      */
     public function index()
     {
-        //
+        $theaters = Theater::all();
+        return $theaters;
     }
 
     /**
@@ -34,7 +37,8 @@ class TheaterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $theater = Theater::create(['no_seats' => $request->movie_id,
+        'cinema_id' => $request->cinema_id]);
     }
 
     /**
@@ -43,7 +47,7 @@ class TheaterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
         //
     }

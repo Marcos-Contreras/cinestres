@@ -20,7 +20,8 @@ class CreateShowsTable extends Migration
             $table->foreignId('theater_id')->references('id')->on('theaters')->onDelete('cascade');
             // $table->string('movie_id');
             // $table->string('theater_id');
-            $table->string('schedule');
+            $table->integer('schedule');
+            $table->date('day');
 
             $table->timestamps();
         });

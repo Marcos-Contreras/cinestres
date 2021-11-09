@@ -13,6 +13,7 @@ class Show extends Model
         'movie_id',
         'theater_id',
         'schedule',
+        'day',
     ];
 
 
