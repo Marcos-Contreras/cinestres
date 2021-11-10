@@ -8,6 +8,7 @@ use App\Http\Controllers\ShowController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\CinemaController;
 use App\Http\Controllers\TheaterController;
+use App\Http\Controllers\PassportAuthController;
 
 /*
 |--------------------------------------------------------------------------

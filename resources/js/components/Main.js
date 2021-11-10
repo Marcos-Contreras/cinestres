@@ -5,7 +5,12 @@ import Navigation from "./Nav"
 import LoginForm from "./LoginForm"
 import Home from "./Home"
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
 
 function Main(){
     return (
@@ -13,6 +18,7 @@ function Main(){
             <main>
                 <Navigation/>
                     <Switch>
+                        
                         <Route path="/cinestres/public/Home" exact component={Home} />
                         <Route path="/cinestres/public/LoginForm" component={LoginForm} />
                     </Switch>

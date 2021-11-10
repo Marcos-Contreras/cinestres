@@ -28,7 +28,7 @@ const LoginForm = () => {
         formData.append("email", formValue.email)
         formData.append("password", formValue.password)
 
-        axios.post("http://localhost/topicos/public/api/login", formData, {
+        axios.post("http://localhost/cinestres/public/api/login", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Accept': 'application/json'
@@ -36,9 +36,9 @@ const LoginForm = () => {
             }
 
         ).then(response => {
-            console.log('response');
+            console.log('response: ');
             console.log(response);
-            history.push("/topicos/public/Home")
+            history.push("/cinestres/public/Home")
         }).catch(error => {
             console.log(error);
             
