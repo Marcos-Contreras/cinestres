@@ -46,6 +46,18 @@ class MovieController extends Controller
             $file->move('assets/uploads/movies/', $filename);
             $request->image = $filename;
         }*/
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:movies|max:255',
+            'runtime' => 'required|max:500|integer',
+            'classification' => 'required|max:1',
+            'director' => 'required|max:255',
+            'actors' => 'required|max:255',
+            'sinopsis' => 'required|max:500',
+        ]);
+        if($validator->fails()){
+            return $validator->errors();
+        }
+
         $movie = Movie::create(['name' => $request->name,
         'runtime' => $request->runtime,
         'classification' => $request->classification,
@@ -86,7 +98,7 @@ class MovieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         /*if($request->hasFile('image'))
         {
@@ -102,6 +114,20 @@ class MovieController extends Controller
             $file->move('assets/uploads/movies/', $filename);
             $request->image = $filename;
         }*/
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:movies,id',
+            'name' => 'required|unique:movies|max:255',
+            'runtime' => 'required|max:500|integer',
+            'classification' => 'required|max:1',
+            'director' => 'required|max:255',
+            'actors' => 'required|max:255',
+            'sinopsis' => 'required|max:500',
+        ]);
+        if($validator->fails()){
+            return $validator->errors();
+        }
+
+
         Movie::where('id',$request->id)
         ->update(['name'=> $request->name,
                           'runtime'=> $request->runtime,
@@ -118,7 +144,7 @@ class MovieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         $movie = Movie::where('id',$request->id)->first();
         $movie->delete();

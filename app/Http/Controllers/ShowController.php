@@ -44,9 +44,20 @@ class ShowController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'movie_id' => 'required|exists:movies,id',
+            'theater_id' => 'required|exists:theaters,id',
+            'schedule' => 'required|max:24|int',
+            'day' => 'required|date',
+        ]);
+        if($validator->fails()){
+            return $validator->errors();
+        }
+
         $show = Show::create(['movie_id' => $request->movie_id,
         'theater_id' => $request->theater_id,
-        'schedule' => $request->schedule]);
+        'schedule' => $request->schedule,
+        'day' => $request->day]);
     }
 
     /**
@@ -88,8 +99,19 @@ class ShowController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:shows,id',
+            'movie_id' => 'required|exists:movies,id',
+            'theater_id' => 'required|exists:theaters,id',
+            'schedule' => 'required|max:24|int',
+            'day' => 'required|date',
+        ]);
+        if($validator->fails()){
+            return $validator->errors();
+        }
+
         Show::where('id',$request->id)
         ->update(['movie_id'=> $request->movie_id,
                           'theater_id'=> $request->theater_id,
@@ -103,7 +125,7 @@ class ShowController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         $show = Show::where('id',$request->id)->first();
         $show->delete();

@@ -15,8 +15,12 @@ class TheaterController extends Controller
      */
     public function index()
     {
-        $theaters = Theater::all();
-        return $theaters;
+        $sale = Theater::join('cinemas','cinemas.id', '=', 'theaters.cinema_id')
+        ->select('cinemas.name as Cine', 'theaters.name as Sala', 'theaters.no_seats as NoAsientos')
+        ->orderByDesc('cinemas.name')
+        ->get();
+        return $sale->toJson();
+        // return $sale;
     }
 
     /**
@@ -37,7 +41,17 @@ class TheaterController extends Controller
      */
     public function store(Request $request)
     {
-        $theater = Theater::create(['no_seats' => $request->movie_id,
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'no_seats' => 'required|int|max:50',
+            'cinema_id' => 'required|exists:cinemas,id',
+        ]);
+        if($validator->fails()){
+            return $validator->errors();
+        }
+
+        $theater = Theater::create(['name' => $request->name,
+        'no_seats' => $request->no_seats,
         'cinema_id' => $request->cinema_id]);
     }
 

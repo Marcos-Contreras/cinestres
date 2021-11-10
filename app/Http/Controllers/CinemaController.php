@@ -37,6 +37,14 @@ class CinemaController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'direction' => 'required|max:255',
+        ]);
+        if($validator->fails()){
+            return $validator->errors();
+        }
+
         $cinema = Cinema::create(['name' => $request->name,
         'direction' => $request->direction]);
     }

@@ -42,6 +42,16 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|exists:users,id',
+            'show_id' => 'required|exists:shows,id',
+            'quantity' => 'required|max:30|int',
+            'mount' => 'required|max:900|int',
+        ]);
+        if($validator->fails()){
+            return $validator->errors();
+        }
+
         $sale = Sale::create(['user_id' => $request->user_id,
         'show_id' => $request->show_id,
         'quantity' => $request->quantity,
@@ -56,6 +66,8 @@ class SaleController extends Controller
      */
     public function show(Request $request)
     {
+        
+
         $busqueda = $request->get("name");
         $sale = Sale::join('users','users.id', '=', 'sales.user_id')
         ->join('shows','shows.id', '=', 'sales.show_id')

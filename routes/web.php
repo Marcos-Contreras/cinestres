@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ShowController;
-
+use App\Http\Controllers\MovieController;
+use App\Http\Controllers\CinemaController;
+use App\Http\Controllers\TheaterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +44,6 @@ Route::post('/movieUpdate', [MovieController::class, 'update']);
 Route::post('/movieDestroy', [MovieController::class, 'destroy']);
 
 //RUTAS SHOW
-Route::get('/shows', [ShowController::class, 'index']);
 Route::post('/showSearch', [ShowController::class, 'show']);
 Route::post('/showStore', [ShowController::class, 'store']);
 Route::post('/showUpdate', [ShowController::class, 'update']);
@@ -53,8 +54,8 @@ Route::get('/cinemas', [CinemaController::class, 'index']);
 Route::post('/cinemaStore', [CinemaController::class, 'store']);
 
 //RUTAS THEATER
-Route::get('/theater', [TheaterController::class, 'index']);
-Route::post('/theaStore', [TheaterController::class, 'store']);
+Route::get('/theaters', [TheaterController::class, 'index']);
+Route::post('/theaterStore', [TheaterController::class, 'store']);
 
 //TOKEN PARA POSTMAN
 Route::get('/userToken', [UserController::class, 'showToken']);

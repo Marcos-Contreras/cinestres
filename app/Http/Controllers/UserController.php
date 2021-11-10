@@ -46,6 +46,15 @@ class UserController extends Controller
 
         // $user->save();
 
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => 'required|unique:users|max:255',
+            'password' => 'required',
+        ]);
+        if($validator->fails()){
+            return $validator->errors();
+        }
+
         $user = User::create(['name' => $request->name,
         'email' => $request->email,
         'password' => $request->password]);
@@ -84,8 +93,17 @@ class UserController extends Controller
     // public function update(Request $request, $id)
     public function update(Request $request)
     {
-        User::where('name',$request->name)
-        ->update(['email' => $request->email]);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => 'required|unique:users|max:255',
+            'password' => 'required',
+        ]);
+        if($validator->fails()){
+            return $validator->errors();
+        }
+        User::where('id',$request->id)
+                ->update(['name' => $request->name,
+                        'email' => $request->email]);
     }
 
     /**
